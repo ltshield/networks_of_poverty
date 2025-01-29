@@ -5,6 +5,29 @@ from income import IncomeNode
 from expense import ExpenseNode
 from loans import Loan
 
+"""
+In control group, never save money.
+In experimental group, excess money goes to communal pool.
+
+The only way out of poverty is investment? Creating more resource nodes?
+How do you decide which agents get resource nodes?
+
+Poverty occurs when income == expenses.
+Set expense rate with possible variability at random.
+
+Control group should steadily decrease while experimental increases.
+
+Set amount donated to pool every round. ($2)
+
+One round can be one week/one month. Account for interest rates as necessary. (18-24% healthy interest rate for investment loans)
+- How much should ROI be so that the investments are worth it and result in linear growth of balance over time.
+
+For now, control and experimental group will have same income/expenses, but only experimental will save money and donate to pool for loans that will help them invest
+to increase their income. In theory their balance should increase over time while control's will stay the same.
+
+Implement loan sharks farther down the road.
+"""
+
 NUM_ROUNDS = 10
 
 STARTING_MONEY_VAL = 20
@@ -13,7 +36,7 @@ STARTING_MONEY_VAL = 20
 POVERTY_THRESHOLD = 0
 
 # out of 100. ie 20 == 20% chance
-EXPENSE_CHANCE = 20
+EXPENSE_CHANCE = 40
 
 # for testing purposes (make sure it is negative)
 INITIAL_DEBT = 0
