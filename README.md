@@ -22,3 +22,14 @@ The agent's experience is then graphed. (Debt and loans are combined in the lege
 
 Helpful Tips When Altering Code:
 Debt and loans are both saved as negative values.
+
+Future Work:
+- Support group implementation.
+    - Agents pay "dues" to the support group first each round.
+    - Helpful loaning (less predatory rates)
+    - First few rounds no money is lent from support group.
+    - Logic for giving out communal money:
+        - investments/help paying for expenses/paying off debt/paying off predatory loans
+- Network visualization
+- Effective graphing for data analysis
+    - IQR
