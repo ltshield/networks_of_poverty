@@ -1,7 +1,8 @@
 # networks_of_poverty
-
+**What is it?**
 This is a project to simulate the monetary trends of populations who suffer from predatory lending when living close to the poverty line. We hope that this simulation will enable researchers to explore the feasibility of an intervention for real-life populations in situations akin to the one represented here. It is not intended to serve as conclusive evidence of said intervention's effectiveness or as an irrefutable indicator of the results of its real-world application.
 
+**How does it work?**
 Agents are connected to resource/income nodes that provide them with a steady source of income each round. The range of quantities for this income is decided by the user and is randomly selected at the initialization of the program. However, that income will remain the same for the duration of the simulation.
 
 The user can also determine the potential for a random expense (of value randomly determined between min/max values decided by the user) to occur in the agent's life each round that will detract from their saved money. 
@@ -20,10 +21,10 @@ Money is allocated in the following order:
 
 The agent's experience is then graphed. (Debt and loans are combined in the legend and expense costs are circled at their value.)
 
-Helpful Tips When Altering Code:
+**Helpful Tips When Altering Code:**
 Debt and loans are both saved as negative values.
 
-Future Work:
+**Future Work:**
 - Support group implementation.
     - Agents pay "dues" to the support group first each round.
     - Helpful loaning (less predatory rates)
