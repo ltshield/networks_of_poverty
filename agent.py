@@ -13,7 +13,7 @@ STARTING_MONEY_VAL = 20
 POVERTY_THRESHOLD = 0
 
 # out of 100. ie 20 == 20% chance
-EXPENSE_CHANCE = 40
+EXPENSE_CHANCE = 20
 
 # for testing purposes (make sure it is negative)
 INITIAL_DEBT = 0
@@ -153,8 +153,8 @@ for i in range(NUM_ROUNDS):
         print(agent1.debt)
 
 plt.plot(rounds, money, marker='o', linestyle='-', label="Money at end of round")
-plt.scatter(rounds, agent1.expense_history, facecolors="none", edgecolors="red", s=200, linewidth=2)
 plt.plot(rounds, debt, marker='s', linestyle='--', label="Debt at end of round")
+plt.scatter(rounds, agent1.expense_history, facecolors="none", edgecolors="red", s=200, linewidth=2, label="Expense Value")
 
 plt.legend()
 
