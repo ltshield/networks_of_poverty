@@ -1,6 +1,11 @@
 import random
+import matplotlib.pyplot as plt
+
 from income import IncomeNode
 from expense import ExpenseNode
+from loans import Loan
+
+NUM_ROUNDS = 10
 
 STARTING_MONEY_VAL = 20
 
@@ -11,7 +16,11 @@ POVERTY_THRESHOLD = 0
 EXPENSE_CHANCE = 40
 
 # for testing purposes (make sure it is negative)
-INITIAL_DEBT = -10
+INITIAL_DEBT = 0
+
+# loan rates
+PREDATORY_RATE = 1.50
+HEALTHY_RATE = 1.15
 
 class Agent:
     def __init__(self):
@@ -25,6 +34,12 @@ class Agent:
 
         self.in_poverty: bool = False
         self.debt: int = INITIAL_DEBT
+
+        # if agent already has a loan, cannot take out another one
+        self.has_loan = False
+        self.loan = None
+
+        self.expense_history = []
     
     def run_round(self):
         print(f"Agent ID: {self.id}")
@@ -39,9 +54,56 @@ class Agent:
         rand_expense = random.randint(0,100)
         if rand_expense <= EXPENSE_CHANCE:
             new_expense: ExpenseNode = ExpenseNode()
-            self.money -= new_expense.cost
-            print(f"Random expense! Cost Agent {self.id} {new_expense.cost} dollars!")
+            self.expense_history.append(new_expense.cost)
+
+            # if not enough money to pay expense, take out a loan.
+            print(f"Has loan? {self.has_loan}")
+            if self.money < abs(new_expense.cost) and not self.has_loan:
+                new_expense.cost += self.money
+                self.money = 0
+                print("Taking out a loan.")
+                self.has_loan = True
+                self.loan = Loan(loan_value=new_expense.cost, interest_rate=PREDATORY_RATE)
+                print("LOAN RATE: ", self.loan.loan_value)
+
+            # try to pay expense first, then pay loan, then debt
+            else:
+                self.money += new_expense.cost
+                print(f"Random expense! Cost Agent {self.id} {new_expense.cost} dollars!")
+        else:
+            self.expense_history.append(None)
+
+        if self.has_loan and self.money > 0:
+            difference = self.loan.loan_value + self.money
+            # if difference is negative, not enough to pay off loan
+            if difference < 0:
+                self.loan.loan_value += self.money
+                self.money = 0
+            # if difference is positive, enough money to pay off
+            elif difference > 0:
+                self.money += self.loan.loan_value
+                self.loan = None
+                self.has_loan = False
+            # no longer has loan
+            elif difference == 0:
+                self.money = 0
+                self.loan = None
+                self.has_loan = False
+
+        # if loan was not paid off, appreciate it here
+        if self.has_loan:
+            print(f"Loan left to pay pre-appreciation: {self.loan.loan_value}")
+            self.loan.appreciate()
+            print(f"Loan left to pay post-appreciation: {self.loan.loan_value}")
+
+
+        """
+        TODO: if has loan, should they pay expense first and then loan?
+        if has loan, should I just account for the loan in the debt section?
+        when graphing I think loans should be included in the graphed debt
+        """
         
+
         # take leftover money (if any) and try to pay off debt
         if self.debt != 0 and self.money > 0:
             print(f"Agent's debt is currently: {self.debt}")
@@ -76,7 +138,24 @@ class Agent:
         print(f"Debt at end of this round: {self.debt}\n")
 
 agent1 = Agent()
-for i in range(5):
+money = []
+debt = []
+rounds = [j for j in range(NUM_ROUNDS)]
+
+for i in range(NUM_ROUNDS):
     agent1.run_round()
-    # if agent1.in_poverty:
-    #     break
+    money.append(agent1.money)
+    if agent1.has_loan:
+        debt.append(agent1.debt+agent1.loan.loan_value)
+        print(agent1.debt+agent1.loan.loan_value)
+    else:
+        debt.append(agent1.debt)
+        print(agent1.debt)
+
+plt.plot(rounds, money, marker='o', linestyle='-', label="Money at end of round")
+plt.scatter(rounds, agent1.expense_history, facecolors="none", edgecolors="red", s=200, linewidth=2)
+plt.plot(rounds, debt, marker='s', linestyle='--', label="Debt at end of round")
+
+plt.legend()
+
+plt.show()
