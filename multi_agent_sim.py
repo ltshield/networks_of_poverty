@@ -1,11 +1,14 @@
 import matplotlib.pyplot as plt
+import numpy as np
+from numpy.typing import NDArray
+import random
 from control_group import Control_Group
 from support_group import Support_Group
 
 NUM_ROUNDS = 10
 
-INCOME_RATE_W_SAVING = 50
-UNHEALTHY_INCOME_RATE_WO_SAVING = 40
+INCOME_RATE_W_SAVING = random.randint(45,75)
+UNHEALTHY_INCOME_RATE_WO_SAVING = random.randint(25,35)
 EXPENSE_RATE = -40 # keep negative
 
 DUES = 5
@@ -22,7 +25,5 @@ for i in range(NUM_ROUNDS):
 
 control_group.plot_money_debt([i for i in range(NUM_ROUNDS)])
 support_group.plot_money_debt([i for i in range(NUM_ROUNDS)])
-
-# plt.legend()
 
 plt.show()

@@ -1,4 +1,4 @@
-# import random
+import random
 
 from income import IncomeNode
 from expense import ExpenseNode
@@ -8,7 +8,7 @@ STARTING_MONEY_VAL = 0
 
 class Agent:
     def __init__(self, income_rate, expense_rate):
-        self.id = 0
+        self.id = random.randint(0,1000)
 
         # TODO: randomization for expense nodes (maybe for value of income nodes?)
         self.incomes: list[IncomeNode] = [IncomeNode(value=income_rate)]
@@ -23,7 +23,7 @@ class Agent:
         # if agent already has a loan, cannot take out another one
         self.has_loan = False
         # agent's loan is their debt
-        self.debt = None
+        self.debt = 0
         
         self.money_history = []
         self.debt_history = []
@@ -38,3 +38,6 @@ class Agent:
 
         for expense in self.expenses:
             self.money += expense.cost
+        
+        self.money_history.append(self.money)
+        self.debt_history.append(self.debt)
