@@ -1,6 +1,5 @@
 from agent import Agent
 import numpy as np
-from numpy.typing import NDArray
 import random
 import matplotlib.pyplot as plt
 
@@ -17,7 +16,6 @@ class Support_Group:
             agent.run_round()
 
     def plot_money_debt(self, num_rounds):
-        print(num_rounds)
         num_agents = len(self.agents)
         number_rounds = len(num_rounds)
 
@@ -29,8 +27,6 @@ class Support_Group:
         money_median = np.median(agent_money_history, axis=0)
         money_q1 = np.percentile(agent_money_history, 25, axis=0)
         money_q3 = np.percentile(agent_money_history, 75, axis=0)
-        print(money_q1)
-        print(money_q3)
 
         plt.plot(num_rounds, money_median, label="Median Money", color="green")
         plt.fill_between(num_rounds, money_q1, money_q3, color='green', alpha=0.3, label="Interquartile Range (Q1–Q3)")

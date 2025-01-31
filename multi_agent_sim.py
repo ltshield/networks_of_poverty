@@ -1,6 +1,4 @@
 import matplotlib.pyplot as plt
-import numpy as np
-from numpy.typing import NDArray
 import random
 from control_group import Control_Group
 from support_group import Support_Group

@@ -1,6 +1,5 @@
 from agent import Agent
 import numpy as np
-from numpy.typing import NDArray
 import random
 import matplotlib.pyplot as plt
 
