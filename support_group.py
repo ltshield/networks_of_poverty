@@ -17,6 +17,7 @@ class Support_Group:
         self.agents = [Agent(income_rate=random.randint(45,75), expense_rate=expense_rate, group_type="SUPPORT", communal_pool=self) for i in range(NUM_CONTROL_AGENTS)]
         self.dues = dues
         self.communal_money = 0
+        self.communal_money_history = []
         self.round_num = 0
 
     def run_round(self):
@@ -28,6 +29,7 @@ class Support_Group:
             self.allocate_loans()
 
         self.round_num += 1
+        self.communal_money_history.append(self.communal_money)
 
     def plot_money_debt(self, num_rounds):
         num_agents = len(self.agents)
@@ -42,8 +44,13 @@ class Support_Group:
         money_q1 = np.percentile(agent_money_history, 25, axis=0)
         money_q3 = np.percentile(agent_money_history, 75, axis=0)
 
+        # print(len(num_rounds))
+        # print(len(self.communal_money_history))
+
+        plt.scatter(num_rounds, self.communal_money_history, label="Communal Money", color="greenyellow")
         plt.plot(num_rounds, money_median, label="Median Money", color="green")
         plt.fill_between(num_rounds, money_q1, money_q3, color='green', alpha=0.3, label="Interquartile Range (Q1–Q3)")
+        plt.legend()
     
     def allocate_loans(self):
         if self.communal_money >= LOAN_VALUE:

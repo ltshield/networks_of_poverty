@@ -11,7 +11,7 @@ EXPENSE_RATE = -40 # keep negative
 
 DUES = 5
 
-control_group = Control_Group(income_rate=UNHEALTHY_INCOME_RATE_WO_SAVING, expense_rate=EXPENSE_RATE)
+control_group = Control_Group(income_rate=40, expense_rate=EXPENSE_RATE)
 support_group = Support_Group(dues=DUES, income_rate=INCOME_RATE_W_SAVING, expense_rate=EXPENSE_RATE)
 
 rounds = [j for j in range(NUM_ROUNDS)]

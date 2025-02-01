@@ -7,7 +7,7 @@ NUM_CONTROL_AGENTS = 5
 
 class Control_Group:
     def __init__(self, income_rate, expense_rate):
-        self.agents = [Agent(income_rate=random.randint(25,35), expense_rate=expense_rate, group_type="CONTROL") for i in range(NUM_CONTROL_AGENTS)]
+        self.agents = [Agent(income_rate, expense_rate=expense_rate, group_type="CONTROL") for i in range(NUM_CONTROL_AGENTS)]
     
     def run_round(self):
         for agent in self.agents:
