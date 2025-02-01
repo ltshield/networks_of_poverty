@@ -7,14 +7,13 @@ NUM_CONTROL_AGENTS = 5
 
 class Control_Group:
     def __init__(self, income_rate, expense_rate):
-        self.agents = [Agent(income_rate=random.randint(25,35), expense_rate=expense_rate) for i in range(NUM_CONTROL_AGENTS)]
+        self.agents = [Agent(income_rate=random.randint(25,35), expense_rate=expense_rate, group_type="CONTROL") for i in range(NUM_CONTROL_AGENTS)]
     
     def run_round(self):
         for agent in self.agents:
             agent.run_round()
 
-    def plot_money_debt(self, num_rounds):
-        print(num_rounds)
+    def plot_money_debt(self, num_rounds: list[int]):
         num_agents = len(self.agents)
         number_rounds = len(num_rounds)
 

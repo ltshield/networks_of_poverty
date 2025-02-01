@@ -3,7 +3,7 @@ import random
 from control_group import Control_Group
 from support_group import Support_Group
 
-NUM_ROUNDS = 10
+NUM_ROUNDS = 25
 
 INCOME_RATE_W_SAVING = random.randint(45,75)
 UNHEALTHY_INCOME_RATE_WO_SAVING = random.randint(25,35)
