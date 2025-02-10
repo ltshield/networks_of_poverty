@@ -14,7 +14,7 @@ INTEREST_RATE = 1.0125
 
 class Support_Group:
     def __init__(self, dues, income_rate, expense_rate):
-        self.agents = [Agent(income_rate=random.randint(45,75), expense_rate=expense_rate, group_type="SUPPORT", communal_pool=self) for i in range(NUM_CONTROL_AGENTS)]
+        self.agents = [Agent(income_rate=income_rate, expense_rate=expense_rate, group_type="SUPPORT", communal_pool=self) for i in range(NUM_CONTROL_AGENTS)]
         self.dues = dues
         self.communal_money = 0
         self.communal_money_history = []
@@ -54,16 +54,19 @@ class Support_Group:
     
     def allocate_loans(self):
         if self.communal_money >= LOAN_VALUE:
+
             # how do we select the agents to get the money? should it be weighted by the ones closest to debt? 
             # this weights agents to get the agent with the smallest income-expenses ratio?
-            agent_to_get_loan = random.choices([agent for agent in self.agents if not agent.has_loan], weights=[1/(max(agent.money-agent.debt,0.01)) for agent in self.agents if not agent.has_loan], k=1)[0]
+            if len([agent for agent in self.agents if not agent.has_loan]) != 0:
+                agent_to_get_loan = random.choices([agent for agent in self.agents if not agent.has_loan], weights=[1/(max(agent.money-agent.debt+1,0.01)) for agent in self.agents if not agent.has_loan], k=1)[0]
+                agent_to_get_loan.has_loan = True
+                self.communal_money -= LOAN_VALUE
+                agent_to_get_loan.incomes.append(IncomeNode(value=INVESTMENT_INCOME_VALUE_PER_ROUND))
+                agent_to_get_loan.loan = Loan(loan_value= LOAN_VALUE, interest_rate=INTEREST_RATE)
+            else:
+                print("Could not allocate loans this round, all agents have loans.")
+            # TODO: CHECK IF AGENTS ARE PAYING OFF LOANS
 
-            # for agent in self.agents:
+           # for agent in self.agents:
             #     print(f"Agent {agent.id} has 1/self-money-self.debt of {1/(agent.money-agent.debt)}")
             # print(f"{agent_to_get_loan.id} should get the loan.")
-
-            agent_to_get_loan.has_loan = True
-            self.communal_money -= LOAN_VALUE
-            agent_to_get_loan.incomes.append(IncomeNode(value=INVESTMENT_INCOME_VALUE_PER_ROUND))
-            agent_to_get_loan.loan = Loan(loan_value= LOAN_VALUE, interest_rate=INTEREST_RATE)
-
