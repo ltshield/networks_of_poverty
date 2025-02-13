@@ -63,8 +63,8 @@ class Support_Group:
                 self.communal_money -= LOAN_VALUE
                 agent_to_get_loan.incomes.append(IncomeNode(value=INVESTMENT_INCOME_VALUE_PER_ROUND))
                 agent_to_get_loan.loan = Loan(loan_value= LOAN_VALUE, interest_rate=INTEREST_RATE)
-            else:
-                print("Could not allocate loans this round, all agents have loans.")
+            # else:
+            #     print("Could not allocate loans this round, all agents have loans.")
             # TODO: CHECK IF AGENTS ARE PAYING OFF LOANS
 
            # for agent in self.agents:
